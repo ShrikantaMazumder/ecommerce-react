@@ -1,16 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+import Product from './components/Product';
+import Home from './components/Home';
 
 function App() {
+
+  const openMenu = () => {
+    document.querySelector('.sidebar').classList.add('open'); 
+  }
+  const closeMenu = () => {
+    document.querySelector('.sidebar').classList.remove('open')
+  }
+
   return (
+      <Router>
     <div className="grid-container">
         <header className="header">
             <div className="brand">
-                <button onclick="openMenu()">
+                <button onClick={openMenu}>
                     &#9776;
                 </button>
-                <a href="index.html">E-Commerce</a>
+                <Link to="/">E-Commerce</Link>
             </div>
             <div className="header-links">
                 <a href="cart.html">Cart</a>
@@ -19,98 +35,20 @@ function App() {
         </header>
         <aside className="sidebar">
             <h3>Shopping Categories</h3>
-            <button className="sidebar-close-btn" onclick="closeMenu()">X</button>
+            <button className="sidebar-close-btn" onClick={closeMenu}>X</button>
             <ul>
                 <li>
-                    <a href="/">Pants</a>
+                    <Link to="/">Pants</Link>
                 </li>
                 <li>
-                    <a href="/">Shirts</a>
+                    <Link to="/">Shirts</Link>
                 </li>
             </ul>
         </aside>
         <main className="main">
             <div className="content">
-                <ul className="products">
-                    <li>
-                        <div className="product">
-                            <img className="product-image" src="images/d1.jpg" alt="Product" />
-                            <div className="product-name">
-                               <a href="product.html">Slim Shirt</a>
-                            </div>
-                            <div className="product-brand">
-                                Nike
-                            </div>
-                            <div className="product-price">$260 </div>
-                            <div className="product-rating">4.5 Stars (10 Reviews) </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="product">
-                            <img className="product-image" src="images/d1.jpg" alt="Product" />
-                            <div className="product-name">
-                               <a href="product.html">Slim Shirt</a>
-                            </div>
-                            <div className="product-brand">
-                                Nike
-                            </div>
-                            <div className="product-price">$260 </div>
-                            <div className="product-rating">4.5 Stars (10 Reviews) </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="product">
-                            <img className="product-image" src="images/d1.jpg" alt="Product" />
-                            <div className="product-name">
-                               <a href="product.html">Slim Shirt</a>
-                            </div>
-                            <div className="product-brand">
-                                Nike
-                            </div>
-                            <div className="product-price">$260 </div>
-                            <div className="product-rating">4.5 Stars (10 Reviews) </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="product">
-                            <img className="product-image" src="images/d1.jpg" alt="Product" />
-                            <div className="product-name">
-                               <a href="product.html">Slim Shirt</a>
-                            </div>
-                            <div className="product-brand">
-                                Nike
-                            </div>
-                            <div className="product-price">$260 </div>
-                            <div className="product-rating">4.5 Stars (10 Reviews) </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="product">
-                            <img className="product-image" src="images/d1.jpg" alt="Product" />
-                            <div className="product-name">
-                               <a href="product.html">Slim Shirt</a>
-                            </div>
-                            <div className="product-brand">
-                                Nike
-                            </div>
-                            <div className="product-price">$260 </div>
-                            <div className="product-rating">4.5 Stars (10 Reviews) </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="product">
-                            <img className="product-image" src="images/d1.jpg" alt="Product" />
-                            <div className="product-name">
-                               <a href="product.html">Slim Shirt</a>
-                            </div>
-                            <div className="product-brand">
-                                Nike
-                            </div>
-                            <div className="product-price">$260 </div>
-                            <div className="product-rating">4.5 Stars (10 Reviews) </div>
-                        </div>
-                    </li>
-                </ul>
+                <Route path="/product/:id" component={Product} />
+                <Route path="/" exact component={Home} />
             </div>
             
         </main>
@@ -118,6 +56,7 @@ function App() {
             All right reserved.
         </footer>
     </div>
+    </Router>
   );
 }
 
