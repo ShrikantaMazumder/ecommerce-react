@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom/cjs/react-router-dom.min';
-import data from '../data';
+import { useSelector, useDispatch } from 'react-redux';
+import { detailProduct } from '../actions/productActions';
 
 const Product = () => {
-    const products = data.products;
     const {id} = useParams();
-    const product = products.find(prod => prod._id === id);
-    console.log(product)
+    const [qty, setQty] = useState(1);
+    const productDetails = useSelector(state => state.productDetails);
+    const { product, loading, error } = productDetails;
+    const dispatch = useDispatch();
+    useEffect(()=> {
+        dispatch(detailProduct(id));
+    },[]);
+
     return (
+        loading ? <div>Loading</div> :
+        error ? <div>{{error}}</div> :
         <div>
             <div className="back-to-result">
                 <Link to="/">Back to results</Link>
@@ -45,12 +53,10 @@ const Product = () => {
                         </li>
                         <li>
                             Qty: 
-                            <select>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                            <select value={qty} onChange={(e) => {setQty(e.target.value)}}>
+                                {
+                                    [...Array(product.countStock).keys()].map(x => <option key={x+1} value={x+1}>{x+1}</option>)
+                                }
                             </select>
                         </li>
                         <li>
